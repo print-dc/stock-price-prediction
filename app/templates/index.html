@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockCNN — Prediction Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────── -->
+<header>
+  <div class="logo">
+    <span class="logo-icon">◈</span>
+    <span class="logo-text">StockCNN</span>
+    <span class="logo-sub">Time-Series Forecasting</span>
+  </div>
+  <div class="header-right">
+    <div class="ticker-selector">
+      <label for="tickerInput">TICKER</label>
+      <input id="tickerInput" type="text" value="AAPL" maxlength="6" spellcheck="false" />
+      <button id="loadBtn">PREDICT →</button>
+    </div>
+    <div class="live-time" id="liveTime"></div>
+  </div>
+</header>
+
+<!-- ── Status bar ──────────────────────────────────────── -->
+<div class="status-bar">
+  <span class="status-dot" id="statusDot"></span>
+  <span id="statusText">Ready</span>
+  <span class="status-sep">|</span>
+  <span id="statusTicker">—</span>
+</div>
+
+<!-- ── KPI Cards ───────────────────────────────────────── -->
+<section class="kpi-row" id="kpiRow">
+  <div class="kpi-card" id="kpi-last">
+    <div class="kpi-label">LAST CLOSE</div>
+    <div class="kpi-value">—</div>
+    <div class="kpi-sub">USD</div>
+  </div>
+  <div class="kpi-card" id="kpi-pred">
+    <div class="kpi-label">PREDICTED</div>
+    <div class="kpi-value">—</div>
+    <div class="kpi-sub">NEXT DAY</div>
+  </div>
+  <div class="kpi-card" id="kpi-chg">
+    <div class="kpi-label">CHANGE</div>
+    <div class="kpi-value">—</div>
+    <div class="kpi-sub">%</div>
+  </div>
+  <div class="kpi-card" id="kpi-trend">
+    <div class="kpi-label">TREND</div>
+    <div class="kpi-value trend-badge">—</div>
+    <div class="kpi-sub" id="kpi-conf">CONFIDENCE</div>
+  </div>
+  <div class="kpi-card" id="kpi-acc">
+    <div class="kpi-label">MODEL ACC</div>
+    <div class="kpi-value">—</div>
+    <div class="kpi-sub">TREND ACCURACY</div>
+  </div>
+</section>
+
+<!-- ── Charts ──────────────────────────────────────────── -->
+<section class="charts-grid">
+  <div class="chart-panel" id="panel-history">
+    <div class="panel-header">
+      <span class="panel-title">90-DAY PRICE HISTORY</span>
+      <span class="panel-tag">CLOSE</span>
+    </div>
+    <div class="chart-wrap"><canvas id="historyChart"></canvas></div>
+  </div>
+
+  <div class="chart-panel" id="panel-batch">
+    <div class="panel-header">
+      <span class="panel-title">TEST SET — ACTUAL vs PREDICTED</span>
+      <span class="panel-tag">BACK-TEST</span>
+    </div>
+    <div class="chart-wrap"><canvas id="batchChart"></canvas></div>
+  </div>
+
+  <div class="chart-panel" id="panel-loss">
+    <div class="panel-header">
+      <span class="panel-title">TRAINING LOSS CURVE</span>
+      <span class="panel-tag">CONVERGENCE</span>
+    </div>
+    <div class="chart-wrap"><canvas id="lossChart"></canvas></div>
+  </div>
+
+  <div class="chart-panel" id="panel-acc">
+    <div class="panel-header">
+      <span class="panel-title">TREND ACCURACY CURVE</span>
+      <span class="panel-tag">CLASSIFICATION</span>
+    </div>
+    <div class="chart-wrap"><canvas id="accChart"></canvas></div>
+  </div>
+</section>
+
+<!-- ── Loader overlay ──────────────────────────────────── -->
+<div class="loader-overlay" id="loader">
+  <div class="loader-box">
+    <div class="loader-spinner"></div>
+    <div class="loader-text" id="loaderText">Fetching data…</div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
