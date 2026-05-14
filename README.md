@@ -148,6 +148,9 @@ python -m eda.analysis --ticker MSFT
 | `GET /api/metrics/<ticker>` | Saved metrics + training history |
 | `GET /api/tickers`          | List of trained tickers |
 
+
+<img width="950" height="439" alt="image" src="https://github.com/user-attachments/assets/617602d0-56bd-4b44-9da7-013d2acf1af2" />
+
 ---
 
 ## Disclaimer
